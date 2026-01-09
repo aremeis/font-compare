@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Compare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&family=Work+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Fira+Code:wght@400;500&family=Source+Code+Pro:ital,wght@0,400;0,500;0,700;1,400&family=Oswald:wght@400;500;700&family=Raleway:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Font Compare</h1>
+    </header>
+
+    <main class="main">
+        <!-- Font Controls Section -->
+        <section class="font-controls">
+            <!-- Font A Controls -->
+            <div class="font-panel" data-font="a">
+                <h2 class="font-panel-title">Font A</h2>
+
+                <div class="control-group">
+                    <label for="font-a-select">Font Family</label>
+                    <select id="font-a-select" class="font-select">
+                        <optgroup label="Sans-Serif">
+                            <option value="Inter">Inter</option>
+                            <option value="Roboto">Roboto</option>
+                            <option value="Open Sans">Open Sans</option>
+                            <option value="Lato">Lato</option>
+                            <option value="Montserrat">Montserrat</option>
+                            <option value="Poppins">Poppins</option>
+                            <option value="Source Sans 3">Source Sans 3</option>
+                            <option value="DM Sans">DM Sans</option>
+                            <option value="Nunito">Nunito</option>
+                            <option value="Work Sans">Work Sans</option>
+                        </optgroup>
+                        <optgroup label="Serif">
+                            <option value="Merriweather">Merriweather</option>
+                            <option value="Playfair Display">Playfair Display</option>
+                            <option value="Lora">Lora</option>
+                            <option value="Source Serif 4">Source Serif 4</option>
+                            <option value="Crimson Text">Crimson Text</option>
+                        </optgroup>
+                        <optgroup label="Monospace">
+                            <option value="JetBrains Mono">JetBrains Mono</option>
+                            <option value="Fira Code">Fira Code</option>
+                            <option value="Source Code Pro">Source Code Pro</option>
+                        </optgroup>
+                        <optgroup label="Display">
+                            <option value="Oswald">Oswald</option>
+                            <option value="Raleway">Raleway</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="font-a-url">Custom Font URL</label>
+                    <input type="url" id="font-a-url" class="font-url-input" placeholder="https://example.com/font.woff2">
+                    <button type="button" id="font-a-load" class="load-font-btn">Load</button>
+                </div>
+
+                <div class="control-group">
+                    <label for="font-a-weight">Weight: <span id="font-a-weight-value">400</span></label>
+                    <input type="range" id="font-a-weight" min="100" max="900" step="100" value="400">
+                </div>
+
+                <div class="control-group">
+                    <label for="font-a-size">Size: <span id="font-a-size-value">48</span>px</label>
+                    <input type="range" id="font-a-size" min="12" max="120" value="48">
+                </div>
+
+                <div class="control-group">
+                    <label for="font-a-spacing">Letter Spacing: <span id="font-a-spacing-value">0</span>px</label>
+                    <input type="range" id="font-a-spacing" min="-2" max="10" step="0.5" value="0">
+                </div>
+
+                <div class="control-group checkbox-group">
+                    <label>
+                        <input type="checkbox" id="font-a-italic">
+                        Italic
+                    </label>
+                </div>
+            </div>
+
+            <!-- Font B Controls -->
+            <div class="font-panel" data-font="b">
+                <h2 class="font-panel-title">Font B</h2>
+
+                <div class="control-group">
+                    <label for="font-b-select">Font Family</label>
+                    <select id="font-b-select" class="font-select">
+                        <optgroup label="Sans-Serif">
+                            <option value="Inter">Inter</option>
+                            <option value="Roboto" selected>Roboto</option>
+                            <option value="Open Sans">Open Sans</option>
+                            <option value="Lato">Lato</option>
+                            <option value="Montserrat">Montserrat</option>
+                            <option value="Poppins">Poppins</option>
+                            <option value="Source Sans 3">Source Sans 3</option>
+                            <option value="DM Sans">DM Sans</option>
+                            <option value="Nunito">Nunito</option>
+                            <option value="Work Sans">Work Sans</option>
+                        </optgroup>
+                        <optgroup label="Serif">
+                            <option value="Merriweather">Merriweather</option>
+                            <option value="Playfair Display">Playfair Display</option>
+                            <option value="Lora">Lora</option>
+                            <option value="Source Serif 4">Source Serif 4</option>
+                            <option value="Crimson Text">Crimson Text</option>
+                        </optgroup>
+                        <optgroup label="Monospace">
+                            <option value="JetBrains Mono">JetBrains Mono</option>
+                            <option value="Fira Code">Fira Code</option>
+                            <option value="Source Code Pro">Source Code Pro</option>
+                        </optgroup>
+                        <optgroup label="Display">
+                            <option value="Oswald">Oswald</option>
+                            <option value="Raleway">Raleway</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="font-b-url">Custom Font URL</label>
+                    <input type="url" id="font-b-url" class="font-url-input" placeholder="https://example.com/font.woff2">
+                    <button type="button" id="font-b-load" class="load-font-btn">Load</button>
+                </div>
+
+                <div class="control-group">
+                    <label for="font-b-weight">Weight: <span id="font-b-weight-value">400</span></label>
+                    <input type="range" id="font-b-weight" min="100" max="900" step="100" value="400">
+                </div>
+
+                <div class="control-group">
+                    <label for="font-b-size">Size: <span id="font-b-size-value">48</span>px</label>
+                    <input type="range" id="font-b-size" min="12" max="120" value="48">
+                </div>
+
+                <div class="control-group">
+                    <label for="font-b-spacing">Letter Spacing: <span id="font-b-spacing-value">0</span>px</label>
+                    <input type="range" id="font-b-spacing" min="-2" max="10" step="0.5" value="0">
+                </div>
+
+                <div class="control-group checkbox-group">
+                    <label>
+                        <input type="checkbox" id="font-b-italic">
+                        Italic
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sample Text Section -->
+        <section class="sample-text-section">
+            <h2>Sample Text</h2>
+            <div class="control-group">
+                <input type="text" id="sample-text-input" value="The quick brown fox jumps over the lazy dog" class="sample-text-input">
+            </div>
+
+            <div class="sample-display">
+                <div class="sample-line" id="sample-line-a">
+                    <span class="sample-label">Font A:</span>
+                    <span class="sample-text">The quick brown fox jumps over the lazy dog</span>
+                </div>
+                <div class="sample-line" id="sample-line-b">
+                    <span class="sample-label">Font B:</span>
+                    <span class="sample-text">The quick brown fox jumps over the lazy dog</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Character Comparison Section -->
+        <section class="character-comparison-section">
+            <h2>Character Comparison</h2>
+            <div class="control-group">
+                <label for="char-set-input">Characters to compare:</label>
+                <input type="text" id="char-set-input" value="afrtcGQR1%" class="char-set-input">
+            </div>
+
+            <div class="comparison-table-container">
+                <table class="comparison-table" id="comparison-table">
+                    <thead>
+                        <tr>
+                            <th class="font-a-header">Font A</th>
+                            <th class="overlay-header">Overlay</th>
+                            <th class="font-b-header">Font B</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comparison-tbody">
+                        <!-- Rows will be generated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="legend">
+                <span class="legend-item">
+                    <span class="legend-color legend-cyan"></span>
+                    Font A only
+                </span>
+                <span class="legend-item">
+                    <span class="legend-color legend-red"></span>
+                    Font B only
+                </span>
+                <span class="legend-item">
+                    <span class="legend-color legend-black"></span>
+                    Both (overlap)
+                </span>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for enlarged character view -->
+    <div class="modal" id="char-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <div class="modal-body" id="modal-body">
+                <!-- Enlarged canvas will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
