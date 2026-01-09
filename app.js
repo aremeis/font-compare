@@ -8,7 +8,7 @@ const STORAGE_KEY = 'fontCompare_customFonts';
 // Application State
 const state = {
     fontA: {
-        family: 'Inter',
+        family: 'system-ui',
         weight: 400,
         size: 48,
         italic: false,
@@ -553,9 +553,20 @@ function updateSampleText() {
     elements.sampleLineB.textContent = state.sampleText;
 }
 
+// Generic font families that should not be quoted in CSS
+const GENERIC_FONT_FAMILIES = ['system-ui', 'serif', 'sans-serif', 'monospace', 'cursive', 'fantasy', 'ui-serif', 'ui-sans-serif', 'ui-monospace', 'ui-rounded'];
+
+function formatFontFamily(family) {
+    // Generic font families should not be quoted
+    if (GENERIC_FONT_FAMILIES.includes(family)) {
+        return family;
+    }
+    return `"${family}"`;
+}
+
 function buildFontStyle(fontConfig) {
     return `
-        font-family: "${fontConfig.family}", sans-serif;
+        font-family: ${formatFontFamily(fontConfig.family)}, sans-serif;
         font-weight: ${fontConfig.weight};
         font-size: ${fontConfig.size}px;
         font-style: ${fontConfig.italic ? 'italic' : 'normal'};
@@ -615,7 +626,7 @@ function renderCharacter(char, fontConfig, color) {
 
     const fontSize = CANVAS_SIZE * FONT_SIZE_RATIO;
     const fontStyle = fontConfig.italic ? 'italic' : 'normal';
-    ctx.font = `${fontStyle} ${fontConfig.weight} ${fontSize}px "${fontConfig.family}"`;
+    ctx.font = `${fontStyle} ${fontConfig.weight} ${fontSize}px ${formatFontFamily(fontConfig.family)}`;
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'center';
 
@@ -657,14 +668,14 @@ function renderOverlay(char, fontConfigA, fontConfigB) {
     const fontSize = CANVAS_SIZE * FONT_SIZE_RATIO;
 
     const fontStyleA = fontConfigA.italic ? 'italic' : 'normal';
-    ctxA.font = `${fontStyleA} ${fontConfigA.weight} ${fontSize}px "${fontConfigA.family}"`;
+    ctxA.font = `${fontStyleA} ${fontConfigA.weight} ${fontSize}px ${formatFontFamily(fontConfigA.family)}`;
     ctxA.textBaseline = 'middle';
     ctxA.textAlign = 'center';
     ctxA.fillStyle = 'black';
     ctxA.fillText(char, CANVAS_SIZE / 2, CANVAS_SIZE / 2);
 
     const fontStyleB = fontConfigB.italic ? 'italic' : 'normal';
-    ctxB.font = `${fontStyleB} ${fontConfigB.weight} ${fontSize}px "${fontConfigB.family}"`;
+    ctxB.font = `${fontStyleB} ${fontConfigB.weight} ${fontSize}px ${formatFontFamily(fontConfigB.family)}`;
     ctxB.textBaseline = 'middle';
     ctxB.textAlign = 'center';
     ctxB.fillStyle = 'black';
@@ -718,7 +729,7 @@ function renderCharacterLarge(char, fontConfig, color, size) {
 
     const fontSize = size * FONT_SIZE_RATIO;
     const fontStyle = fontConfig.italic ? 'italic' : 'normal';
-    ctx.font = `${fontStyle} ${fontConfig.weight} ${fontSize}px "${fontConfig.family}"`;
+    ctx.font = `${fontStyle} ${fontConfig.weight} ${fontSize}px ${formatFontFamily(fontConfig.family)}`;
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'center';
 
@@ -760,14 +771,14 @@ function renderOverlayLarge(char, fontConfigA, fontConfigB, size) {
     const fontSize = size * FONT_SIZE_RATIO;
 
     const fontStyleA = fontConfigA.italic ? 'italic' : 'normal';
-    ctxA.font = `${fontStyleA} ${fontConfigA.weight} ${fontSize}px "${fontConfigA.family}"`;
+    ctxA.font = `${fontStyleA} ${fontConfigA.weight} ${fontSize}px ${formatFontFamily(fontConfigA.family)}`;
     ctxA.textBaseline = 'middle';
     ctxA.textAlign = 'center';
     ctxA.fillStyle = 'black';
     ctxA.fillText(char, size / 2, size / 2);
 
     const fontStyleB = fontConfigB.italic ? 'italic' : 'normal';
-    ctxB.font = `${fontStyleB} ${fontConfigB.weight} ${fontSize}px "${fontConfigB.family}"`;
+    ctxB.font = `${fontStyleB} ${fontConfigB.weight} ${fontSize}px ${formatFontFamily(fontConfigB.family)}`;
     ctxB.textBaseline = 'middle';
     ctxB.textAlign = 'center';
     ctxB.fillStyle = 'black';
