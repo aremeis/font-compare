@@ -38,6 +38,7 @@ const FONT_SIZE_RATIO = 0.7; // Character size relative to canvas
 const elements = {
     // Font A controls
     fontASelect: document.getElementById('font-a-select'),
+    fontAName: document.getElementById('font-a-name'),
     fontAUrl: document.getElementById('font-a-url'),
     fontALoad: document.getElementById('font-a-load'),
     fontAWeight: document.getElementById('font-a-weight'),
@@ -50,6 +51,7 @@ const elements = {
 
     // Font B controls
     fontBSelect: document.getElementById('font-b-select'),
+    fontBName: document.getElementById('font-b-name'),
     fontBUrl: document.getElementById('font-b-url'),
     fontBLoad: document.getElementById('font-b-load'),
     fontBWeight: document.getElementById('font-b-weight'),
@@ -187,13 +189,21 @@ function setupEventListeners() {
 }
 
 /**
- * Load a custom font from URL
+ * Load a custom font from URL (supports both CSS URLs and direct font file URLs)
  */
 async function loadCustomFont(fontSlot) {
+    const nameInput = fontSlot === 'a' ? elements.fontAName : elements.fontBName;
     const urlInput = fontSlot === 'a' ? elements.fontAUrl : elements.fontBUrl;
     const loadBtn = fontSlot === 'a' ? elements.fontALoad : elements.fontBLoad;
     const select = fontSlot === 'a' ? elements.fontASelect : elements.fontBSelect;
+
+    const fontName = nameInput.value.trim();
     const url = urlInput.value.trim();
+
+    if (!fontName) {
+        alert('Please enter a font name');
+        return;
+    }
 
     if (!url) {
         alert('Please enter a font URL');
@@ -212,23 +222,32 @@ async function loadCustomFont(fontSlot) {
     loadBtn.textContent = '...';
 
     try {
-        // Generate a unique font family name
-        const fontName = `Custom-${fontSlot.toUpperCase()}-${Date.now()}`;
+        // Detect if URL is a CSS file or direct font file
+        const isCssUrl = url.includes('/css/') || url.includes('/css?') ||
+                         url.endsWith('.css') || url.includes('fonts.googleapis.com');
 
-        // Create FontFace and load it
-        const fontFace = new FontFace(fontName, `url(${url})`);
-        await fontFace.load();
-        document.fonts.add(fontFace);
+        if (isCssUrl) {
+            // Load CSS file by injecting a <link> element
+            await loadFontFromCss(url, fontName);
+        } else {
+            // Load direct font file using FontFace API
+            const fontFace = new FontFace(fontName, `url(${url})`);
+            await fontFace.load();
+            document.fonts.add(fontFace);
+        }
 
         // Store custom font reference
         state.customFonts.set(fontName, url);
 
-        // Add to select dropdown
-        const option = document.createElement('option');
-        option.value = fontName;
-        option.textContent = `Custom: ${url.split('/').pop()}`;
-        option.selected = true;
-        select.appendChild(option);
+        // Add to select dropdown if not already present
+        const existingOption = Array.from(select.options).find(opt => opt.value === fontName);
+        if (!existingOption) {
+            const option = document.createElement('option');
+            option.value = fontName;
+            option.textContent = fontName;
+            select.appendChild(option);
+        }
+        select.value = fontName;
 
         // Update state
         if (fontSlot === 'a') {
@@ -237,17 +256,61 @@ async function loadCustomFont(fontSlot) {
             state.fontB.family = fontName;
         }
 
-        // Clear input
+        // Clear inputs
+        nameInput.value = '';
         urlInput.value = '';
 
+        // Wait a moment for fonts to be ready, then update
+        await document.fonts.ready;
         updateAll();
     } catch (error) {
         console.error('Failed to load font:', error);
-        alert('Failed to load font. Please check the URL and try again.');
+        alert('Failed to load font. Make sure the font name matches exactly and the URL is correct.');
     } finally {
         loadBtn.disabled = false;
         loadBtn.textContent = 'Load';
     }
+}
+
+/**
+ * Load a font by injecting a CSS stylesheet link
+ */
+function loadFontFromCss(url, fontName) {
+    return new Promise((resolve, reject) => {
+        // Check if stylesheet already exists
+        const existingLink = document.querySelector(`link[href="${url}"]`);
+        if (existingLink) {
+            resolve();
+            return;
+        }
+
+        // Create and inject link element
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = url;
+
+        link.onload = () => {
+            // Wait for fonts to be ready
+            document.fonts.ready.then(() => {
+                // Check if the font is now available
+                const testFont = `12px "${fontName}"`;
+                if (document.fonts.check(testFont)) {
+                    resolve();
+                } else {
+                    // Font might still be loading, wait a bit more
+                    setTimeout(() => {
+                        document.fonts.ready.then(resolve);
+                    }, 500);
+                }
+            });
+        };
+
+        link.onerror = () => {
+            reject(new Error('Failed to load CSS file'));
+        };
+
+        document.head.appendChild(link);
+    });
 }
 
 /**

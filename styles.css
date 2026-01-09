@@ -154,25 +154,45 @@ section h2 {
     box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
 }
 
-/* URL Input and Load Button */
-.font-url-input {
-    width: calc(100% - 70px);
+/* Custom Font Inputs */
+.custom-font-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+}
+
+.custom-font-group label {
+    width: 100%;
+}
+
+.font-name-input {
+    flex: 1;
+    min-width: 100px;
     padding: var(--spacing-sm);
     font-size: 0.875rem;
     border: 1px solid var(--border);
-    border-radius: var(--radius) 0 0 var(--radius);
+    border-radius: var(--radius);
+    background-color: var(--bg-primary);
+}
+
+.font-url-input {
+    flex: 2;
+    min-width: 150px;
+    padding: var(--spacing-sm);
+    font-size: 0.875rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
     background-color: var(--bg-primary);
 }
 
 .load-font-btn {
-    width: 60px;
-    padding: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--bg-primary);
     background-color: var(--accent);
     border: none;
-    border-radius: 0 var(--radius) var(--radius) 0;
+    border-radius: var(--radius);
     cursor: pointer;
     transition: background-color 0.2s;
 }
