@@ -529,12 +529,13 @@ async function loadCustomFontsFromStorage() {
 // ============================================
 
 function parseCharacterSet(input) {
-    if (input.includes(',')) {
-        state.characters = input.split(',')
-            .map(c => c.trim())
+    if (input.includes(' ')) {
+        // Space-separated: allows sequences like "the quick" or "a f r t"
+        state.characters = input.split(' ')
             .filter(c => c.length > 0);
     } else {
-        state.characters = input.split('').filter(c => c.trim().length > 0);
+        // No spaces: split into individual characters
+        state.characters = input.split('').filter(c => c.length > 0);
     }
 }
 
