@@ -16,7 +16,11 @@
 
     <main class="main">
         <!-- Font Controls Section -->
-        <section class="font-controls">
+        <section class="font-controls-wrapper">
+            <div class="font-controls-header">
+                <button type="button" id="add-custom-font-btn" class="add-custom-font-btn">+ Add Custom Font</button>
+            </div>
+            <div class="font-controls">
             <!-- Font A Controls -->
             <div class="font-panel" data-font="a">
                 <h2 class="font-panel-title">Font A</h2>
@@ -53,13 +57,6 @@
                             <option value="Raleway">Raleway</option>
                         </optgroup>
                     </select>
-                </div>
-
-                <div class="control-group custom-font-group">
-                    <label>Custom Font</label>
-                    <input type="text" id="font-a-name" class="font-name-input" placeholder="Font name (e.g., Arial)">
-                    <input type="url" id="font-a-url" class="font-url-input" placeholder="CSS or font file URL">
-                    <button type="button" id="font-a-load" class="load-font-btn">Load</button>
                 </div>
 
                 <div class="control-group">
@@ -123,13 +120,6 @@
                     </select>
                 </div>
 
-                <div class="control-group custom-font-group">
-                    <label>Custom Font</label>
-                    <input type="text" id="font-b-name" class="font-name-input" placeholder="Font name (e.g., Arial)">
-                    <input type="url" id="font-b-url" class="font-url-input" placeholder="CSS or font file URL">
-                    <button type="button" id="font-b-load" class="load-font-btn">Load</button>
-                </div>
-
                 <div class="control-group">
                     <label for="font-b-weight">Weight: <span id="font-b-weight-value">400</span></label>
                     <input type="range" id="font-b-weight" min="100" max="900" step="100" value="400">
@@ -151,6 +141,7 @@
                         Italic
                     </label>
                 </div>
+            </div>
             </div>
         </section>
 
@@ -219,6 +210,26 @@
             <button class="modal-close" id="modal-close">&times;</button>
             <div class="modal-body" id="modal-body">
                 <!-- Enlarged canvas will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for adding custom fonts -->
+    <div class="modal" id="custom-font-modal">
+        <div class="modal-content custom-font-modal-content">
+            <button class="modal-close" id="custom-font-modal-close">&times;</button>
+            <h2>Add Custom Font</h2>
+            <div class="custom-font-form">
+                <div class="control-group">
+                    <label for="custom-font-url">Font URL (CSS stylesheet or font file)</label>
+                    <input type="url" id="custom-font-url" class="custom-font-url-input" placeholder="https://fonts.cdnfonts.com/css/my-font">
+                </div>
+                <div class="control-group">
+                    <button type="button" id="custom-font-fetch" class="fetch-font-btn">Fetch Font</button>
+                </div>
+                <div id="custom-font-results" class="custom-font-results">
+                    <!-- Font detection results will appear here -->
+                </div>
             </div>
         </div>
     </div>
